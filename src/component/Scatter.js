@@ -3,15 +3,16 @@ import ReactEcharts from "echarts-for-react";
 import WineData from "./../wineData.json";
 
 const Scatter = () => {
-  const [scatterOption, setScatterOption] = useState({});
+  const [scatterOption, setScatterOption] = useState({}); //States to store the details about the scatter chart
 
   useEffect(() => {
-    getDataForScatterChart();
+    getDataForScatterChart(); //Function will be invoked when the component loads
   }, []);
 
   const getDataForScatterChart = () => {
     const colorIntensityData = [];
     WineData.map((item) => {
+      //Fetch the data of Color Intensity from the data set
       return colorIntensityData.push(
         item.Color_intensity ? item.Color_intensity : 0
       );
@@ -19,10 +20,12 @@ const Scatter = () => {
 
     const hueData = [];
     WineData.map((item) => {
+      //Fetch the data of Hue from the data set
       return hueData.push(item.Hue ? item.Hue : 0);
     });
 
     let tempScatterOption = {
+      //Setup for all the details required for the implementation of Scatter Chart from ECharts.
       xAxis: {
         data: colorIntensityData,
         name: "Color Intensity",
@@ -38,10 +41,10 @@ const Scatter = () => {
         },
       ],
     };
-    setScatterOption(tempScatterOption);
+    setScatterOption(tempScatterOption); //Updating state
   };
 
-  return <ReactEcharts option={scatterOption} />;
+  return <ReactEcharts option={scatterOption} />; //Rendering the Scatter Chart
 };
 
 export default Scatter;
