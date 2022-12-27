@@ -13,17 +13,15 @@ function Bar() {
     let avgMalicAcid = [];
     const unique = [...new Set(WineData.map((item) => item.Alcohol))]; //gets all the unique categories of Alcohol present in the data set
     unique.map((alcoholType) => {
-      const alcoholData = WineData.filter((item) => {
-        //Filter the records with each category of Alcohol
-        return item.Alcohol === alcoholType;
-      });
       let sum = 0;
-      for (let ele of alcoholData) {
-        //Calculates the sum of Malic Acid from the filtered data
-        sum = sum + ele.Malic_Acid;
-      }
-      let avg = sum / alcoholData.length; //Calculates the average of Malic Acid
-      return avgMalicAcid.push(Number(avg.toFixed(2)));
+      sum = WineData.filter((WineData) => WineData.Alcohol === alcoholType) //Filter the records with each category of Alcohol
+        .map((WineData) => WineData.Malic_Acid)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0); //Calculates the sum of Malic Acid from the filtered data
+
+      let avg =
+        sum /
+        WineData.filter((WineData) => WineData.Alcohol === alcoholType).length; //Calculates the average of Malic Acid
+      return avgMalicAcid.push(Number(avg.toFixed(2))); //Save the average of each category in an array
     });
     let tempBarOption = {
       //Setup for all the details required for the implementation of Bar Chart from ECharts.
